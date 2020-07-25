@@ -437,11 +437,11 @@ public class LoadDatabase {
         for (int i = 0; i < fields.length; i++) {
             // 将每一个列定义拼接上去
             Field field = fields[i];
-            if (Objects.isNull(field.getKey()) || field.getKey().isEmpty()) {
-                sql.append(field.getName() + " " + field.getType());
-            } else {
-                sql.append(field.getName() + " " + field.getType() + " " + field.getKey());
-            }
+//            if (Objects.isNull(field.getKey()) || field.getKey().isEmpty()) {
+//                sql.append(field.getName() + " " + field.getType());
+//            } else {
+//                sql.append(field.getName() + " " + field.getType() + " " + field.getKey());
+//            }
             // 拼接最后一个列定义时不需要拼接 ","
             if (i == fields.length - 1) {
                 continue;
@@ -807,23 +807,23 @@ public class LoadDatabase {
             StringBuilder values = new StringBuilder();
             // 遍历Field集
             int num = 1;
-            for (Field field : fields) {
-                columns.append(field.getName());
-                switch (field.getType()) {
-                    case Field.INT:
-                        values.append(field.getValue() + " ");
-                        break;
-                    case Field.STRING_255:
-                        values.append("\'" + field.getValue() + "\'");
-                        break;
-                }
-                if (num == fields.length) {
-                    continue;
-                }
-                columns.append(",");
-                values.append(",");
-                num++;
-            }
+//            for (Field field : fields) {
+//                columns.append(field.getName());
+//                switch (field.getType()) {
+//                    case Field.INT:
+//                        values.append(field.getValue() + " ");
+//                        break;
+//                    case Field.STRING_255:
+//                        values.append("\'" + field.getValue() + "\'");
+//                        break;
+//                }
+//                if (num == fields.length) {
+//                    continue;
+//                }
+//                columns.append(",");
+//                values.append(",");
+//                num++;
+//            }
             // 拼接插入语句
             String sql_insert_into = SQL_INSER_INTO + tableName + " (" + columns + ") values(" + values + ");";
             return executeUpdate(sql_insert_into, "dml");
@@ -908,14 +908,14 @@ public class LoadDatabase {
                 return false;
             }
             String v = null;
-            switch (fields[0].getType()) {
-                case Field.INT:
-                    v = fields[0].getValue();
-                    break;
-                case Field.STRING_255:
-                    v = "\'" + fields[0].getValue() + "\'";
-                    break;
-            }
+//            switch (fields[0].getType()) {
+//                case Field.INT:
+//                    v = fields[0].getValue();
+//                    break;
+//                case Field.STRING_255:
+//                    v = "\'" + fields[0].getValue() + "\'";
+//                    break;
+//            }
 
             // 拼接删除语句
             String sql_delete = "delete from " + tableName + " where " + fields[0].getName() + "=" + v + ";";
@@ -1009,12 +1009,12 @@ public class LoadDatabase {
             // 取出字段值
             String v = null;
             switch (field.getType()) {
-                case Field.INT:
-                    v = field.getValue();
-                    break;
-                case Field.STRING_255:
-                    v = "\'" + field.getValue() + "\'";
-                    break;
+//                case Field.INT:
+//                    v = field.getValue();
+//                    break;
+//                case Field.STRING_255:
+//                    v = "\'" + field.getValue() + "\'";
+//                    break;
             }
             // 拼接where限定子句
             return setWhere(field.getName(), compare, v);
@@ -1069,12 +1069,12 @@ public class LoadDatabase {
             for (Field field : fields) {
                 columns[index] = field.getName();
                 switch (field.getType()) {
-                    case Field.INT:
-                        values[index] = field.getValue() + " ";
-                        break;
-                    case Field.STRING_255:
-                        values[index] = "\'" + field.getValue() + "\'";
-                        break;
+//                    case Field.Type.INT:
+//                        values[index] = field.getValue() + " ";
+//                        break;
+//                    case Field.Type.VARCHAR:
+//                        values[index] = "\'" + field.getValue() + "\'";
+//                        break;
                 }
                 index++;
             }
