@@ -1,5 +1,6 @@
 package src.com.ych.whimsy.mysql;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Objects;
  * 例如:Fileld field=new Field("id",Field.Type.INT.getType(8),"12345678",Field.DefaultValue.XXX);<br/>
  * 2.可以通过选着合适的构造器,在通过一些列set方法来设置字段名等属性值
  */
-public class Field {
+public class Field implements Restriction {
 
     /**
      * 字段名,也就是数据库表的列定义名称
@@ -26,6 +27,10 @@ public class Field {
      */
     private String value;
 
+    /**
+     * 约束
+     */
+    private String restriction;
 
     /**
      * 默认构造器
@@ -104,6 +109,30 @@ public class Field {
         this.value = value;
     }
 
+    /**
+     * 设置数据库约束,在此设置的邀约束将使用列级约束语法进行约束
+     *
+     * @param restriction 约束
+     * @throws SQLException 错误的数据库约束
+     */
+    public void setRestriction (String restriction) throws SQLException {
+        switch (restriction) {
+            case AUTO_INCREMENT:
+                this.restriction = AUTO_INCREMENT;
+                break;
+            case NOT_NULL:
+                this.restriction = NOT_NULL;
+                break;
+            case UNIQUE:
+                this.restriction = UNIQUE;
+                break;
+            case PRIMARY_KEY:
+                this.restriction = PRIMARY_KEY;
+                break;
+            default:
+                throw new SQLException("错误的数据库约束");
+        }
+    }
 
     /**
      * 获取字段对象的字段名
@@ -133,6 +162,11 @@ public class Field {
     }
 
 
+    /**
+     * 获取字段默认值
+     *
+     * @return 默认值
+     */
     public String getDefault ( ) {
         return this.type.getDefaultValue();
     }
@@ -145,6 +179,6 @@ public class Field {
      */
     @Override
     public String toString ( ) {
-        return this.name + " " + type;
+        return Objects.isNull(restriction) ? this.name + " " + type : this.name + " " + type + " " + restriction;
     }
 }

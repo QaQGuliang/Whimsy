@@ -1,4 +1,4 @@
-package com.ych.whimsy.number;
+package src.com.ych.whimsy.number;
 
 /**
  * 2020年1月5日下午7:10:40<br>
